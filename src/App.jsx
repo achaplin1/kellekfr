@@ -75,10 +75,12 @@ export default function QuiDeNous() {
     : [];
 
   const groupedResults = {};
-  currentResults.forEach((choice, i) => {
-    const voter = players[i];
-    groupedResults[voter] = choice;
-  });
+  if (Array.isArray(currentResults) && Array.isArray(players)) {
+    currentResults.forEach((choice, i) => {
+      const voter = players[i] || `Joueur ${i + 1}`;
+      groupedResults[voter] = choice;
+    });
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-500 to-yellow-400 p-10 flex flex-col items-center text-center font-sans">
