@@ -1,25 +1,41 @@
-const API_URL = 'https://kollek-production.up.railway.app/api'; 
-let userId = localStorage.getItem('userId');
+const API_URL = 'https://kollek-production.up.railway.app/api'; // Remplace par ton vrai domaine Railway
 
+let userId = localStorage.getItem('userId');
 if (userId) connect(true);
 
 function connect(auto = false) {
   if (!auto) {
-    userId = document.getElementById('userIdInput').value;
-    localStorage.setItem('userId', userId);
-  }
+    userId = document.getElementById('userIdInput').value.trim();
+    const username = document.getElementById('usernameInput').value.trim();
 
-  fetch(`${API_URL}/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userId })
-  })
-  .then(() => {
+    if (!userId) {
+      userId = crypto.randomUUID();
+    }
+
+    localStorage.setItem('userId', userId);
+
+    fetch(`${API_URL}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, username })
+    })
+    .then(() => {
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      document.getElementById('userIdDisplay').innerText = userId;
+      loadInventory();
+    });
+  } else {
     document.getElementById('login').style.display = 'none';
     document.getElementById('app').style.display = 'block';
     document.getElementById('userIdDisplay').innerText = userId;
     loadInventory();
-  });
+  }
+}
+
+function logout() {
+  localStorage.removeItem('userId');
+  location.reload();
 }
 
 function openBooster() {
