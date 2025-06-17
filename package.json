@@ -1,5 +1,5 @@
 {
-  "name": "qui-de-nous-front",
+  "name": "qui-de-nous-upgraded",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
@@ -9,7 +9,8 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "socket.io-client": "^4.7.2"
+    "socket.io-client": "^4.7.2",
+    "framer-motion": "^10.16.1"
   },
   "devDependencies": {
     "vite": "^4.0.0",
