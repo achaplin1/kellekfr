@@ -1,4 +1,4 @@
-const API_URL = 'kollek.railway.internal'; // <-- à adapter à ton URL Railway
+const API_URL = 'https://kollek.up.railway.app/api'; 
 let userId = localStorage.getItem('userId');
 
 if (userId) connect(true);
