@@ -1,4 +1,4 @@
-const API_URL = 'https://kollek.up.railway.app/api'; 
+const API_URL = 'https://kollek-production.up.railway.app'; 
 let userId = localStorage.getItem('userId');
 
 if (userId) connect(true);
