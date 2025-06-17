@@ -70,7 +70,10 @@ export default function QuiDeNous() {
     }
   };
 
-  const currentResults = answers[showingResultsIndex] || [];
+  const currentResults = Array.isArray(answers[showingResultsIndex])
+    ? answers[showingResultsIndex]
+    : [];
+
   const groupedResults = {};
   currentResults.forEach((choice, i) => {
     const voter = players[i];
