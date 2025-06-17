@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Booster Cards</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Booster Cards</h1>
+  <div id="login">
+    <input id="userIdInput" placeholder="Ton identifiant">
+    <button onclick="connect()">Connexion</button>
+  </div>
+  <div id="app" style="display:none">
+    <p>Connecté en tant que : <span id="userIdDisplay"></span></p>
+    <button onclick="openBooster()">Ouvrir un booster</button>
+    <h3>Inventaire</h3>
+    <ul id="inventory"></ul>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
