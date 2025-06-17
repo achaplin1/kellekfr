@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3001'); // remplace par l'URL Railway
+const socket = io('kollek-production.up.railway.app'); // remplace par l'URL Railway
 
 const sampleQuestions = [
   "Qui adore les chats ?",
