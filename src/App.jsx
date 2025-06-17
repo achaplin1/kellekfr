@@ -5,7 +5,7 @@ import { Button } from './components/ui/button';
 import { Card, CardContent } from './components/ui/card';
 import { motion } from 'framer-motion';
 
-const socket = io('https://kollek-production.up.railway.app');
+const socket = io('kollek-production.up.railway.app');
 
 const sampleQuestions = [
   "Qui adore les chats ?",
