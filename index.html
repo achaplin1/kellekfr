@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chronoforge Idle</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Chronoforge Idle</h1>
+    <p>Façonnez un empire énergétique intemporel, entre forge du flux, études ésotériques et invocations d'artéfacts.</p>
+  </header>
+
+  <main>
+    <section id="resources" class="panel">
+      <h2>Ressources</h2>
+      <div class="resource-grid">
+        <div class="resource" data-key="flux">
+          <h3>Flux</h3>
+          <p class="value" id="flux-count">0</p>
+          <p class="rate" id="flux-rate">+0/s</p>
+        </div>
+        <div class="resource" data-key="insight">
+          <h3>Inspiration</h3>
+          <p class="value" id="insight-count">0</p>
+          <p class="rate" id="insight-rate">+0/s</p>
+        </div>
+        <div class="resource" data-key="shards">
+          <h3>Fragments de temps</h3>
+          <p class="value" id="shards-count">0</p>
+          <p class="rate" id="shards-rate">+0/s</p>
+        </div>
+        <div class="resource" data-key="tokens">
+          <h3>Clés d'invocation</h3>
+          <p class="value" id="tokens-count">0</p>
+          <p class="rate" id="tokens-rate">+0/s</p>
+        </div>
+        <div class="resource" data-key="eternity">
+          <h3>Essence Éternelle</h3>
+          <p class="value" id="eternity-count">0</p>
+          <p>Multiplicateur global: <span id="eternity-mult">1.00x</span></p>
+        </div>
+      </div>
+      <button id="gather-button" class="primary">Canaliser le flux (+1)</button>
+      <p class="hint">Astuce : rien que la première heure cache des dizaines de découvertes. Sauvegarde automatique toutes les 30 secondes.</p>
+    </section>
+
+    <section id="automation" class="panel">
+      <h2>Forge du Flux</h2>
+      <div id="automation-list" class="card-list"></div>
+    </section>
+
+    <section id="research" class="panel">
+      <h2>Voies de recherche</h2>
+      <div id="research-list" class="card-list"></div>
+    </section>
+
+    <section id="gacha" class="panel">
+      <h2>Invocations du Néant</h2>
+      <div class="gacha-controls">
+        <p>Utilisez vos clés d'invocation pour attirer des Artéfacts. Chaque Artéfact offre un bonus permanent cumulatif.</p>
+        <button id="pull-once" class="primary">Invocation x1 (1 clé)</button>
+        <button id="pull-ten" class="primary">Invocation x10 (10 clés)</button>
+        <button id="salvage-duplicates">Transmuter les doublons</button>
+      </div>
+      <div id="gacha-log" class="log"></div>
+      <div>
+        <h3>Collection d'artéfacts</h3>
+        <div id="artifact-inventory" class="card-list small inventory"></div>
+      </div>
+    </section>
+
+    <section id="achievements" class="panel">
+      <h2>Chroniques</h2>
+      <div id="achievement-list" class="card-list small"></div>
+    </section>
+
+    <section id="prestige" class="panel">
+      <h2>Ascension</h2>
+      <p>Réinitialise la plupart de vos progrès, mais condense vos exploits en Essence Éternelle. Les bonus sont exponentiels. Débloqué après 100k flux cumulés.</p>
+      <button id="ascend-button" disabled>Ascension</button>
+      <p>Ascensions réalisées : <span id="ascend-count">0</span></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Version <span id="version"></span> &mdash; Sauvegarde automatique toutes les 30 secondes. <button id="export-save">Exporter</button> <button id="import-save">Importer</button> <button id="wipe-save">Réinitialiser</button></p>
+    <textarea id="save-data" placeholder="Collez votre sauvegarde ici"></textarea>
+  </footer>
+
+  <template id="automation-card-template">
+    <article class="card">
+      <div class="card-header">
+        <h3 class="title"></h3>
+        <span class="level"></span>
+      </div>
+      <p class="description"></p>
+      <p class="effect"></p>
+      <p class="cost"></p>
+      <button class="buy-button primary">Acheter</button>
+    </article>
+  </template>
+
+  <template id="research-card-template">
+    <article class="card">
+      <div class="card-header">
+        <h3 class="title"></h3>
+        <span class="status"></span>
+      </div>
+      <p class="description"></p>
+      <p class="effect"></p>
+      <p class="cost"></p>
+      <button class="buy-button primary">Étudier</button>
+    </article>
+  </template>
+
+  <template id="achievement-template">
+    <article class="card achievement">
+      <h3 class="title"></h3>
+      <p class="description"></p>
+    </article>
+  </template>
+
+  <script src="game.js"></script>
+</body>
+</html>
