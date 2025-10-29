@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chronoforge Nexus</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="starfield"></canvas>
+  <div class="app-shell">
+    <header class="top-bar">
+      <div class="brand">
+        <h1>Chronoforge Nexus</h1>
+        <p>Une forge-idle sensorielle où le temps s'enroule autour de votre noyau.</p>
+      </div>
+      <div class="status-strip">
+        <div class="status-chip" id="eternity-chip">
+          <span class="chip-label">Essence</span>
+          <span class="chip-value" id="eternity-count">0</span>
+          <span class="chip-sub">Multiplicateur <strong id="eternity-mult">1.00x</strong></span>
+        </div>
+        <div class="status-chip" id="ascend-chip">
+          <span class="chip-label">Ascensions</span>
+          <span class="chip-value" id="ascend-count">0</span>
+          <div class="chip-progress">
+            <div class="chip-progress-fill" id="ascend-progress"></div>
+          </div>
+          <span class="chip-sub">Charge du cycle</span>
+        </div>
+        <div class="status-chip small" id="version-chip">
+          <span class="chip-label">Version</span>
+          <span class="chip-value" id="version"></span>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-layout">
+      <aside class="resource-hud">
+        <div class="core-harvester">
+          <div class="core-shield"></div>
+          <button id="gather-core" class="core-button">
+            <span class="core-label">Canaliser</span>
+            <span class="core-boost" id="manual-bonus">x1</span>
+          </button>
+          <div class="core-orbit"></div>
+        </div>
+        <div class="resource-orbits">
+          <div class="resource-orb" data-resource="flux">
+            <div class="orb-glow"></div>
+            <div class="orb-label">
+              <span class="orb-name">Flux</span>
+              <span class="orb-value" id="flux-count">0</span>
+              <span class="orb-rate" id="flux-rate">+0/s</span>
+            </div>
+          </div>
+          <div class="resource-orb" data-resource="insight">
+            <div class="orb-glow"></div>
+            <div class="orb-label">
+              <span class="orb-name">Inspiration</span>
+              <span class="orb-value" id="insight-count">0</span>
+              <span class="orb-rate" id="insight-rate">+0/s</span>
+            </div>
+          </div>
+          <div class="resource-orb" data-resource="shards">
+            <div class="orb-glow"></div>
+            <div class="orb-label">
+              <span class="orb-name">Fragments</span>
+              <span class="orb-value" id="shards-count">0</span>
+              <span class="orb-rate" id="shards-rate">+0/s</span>
+            </div>
+          </div>
+          <div class="resource-orb" data-resource="tokens">
+            <div class="orb-glow"></div>
+            <div class="orb-label">
+              <span class="orb-name">Clés</span>
+              <span class="orb-value" id="tokens-count">0</span>
+              <span class="orb-rate" id="tokens-rate">+0/s</span>
+            </div>
+          </div>
+        </div>
+        <div class="activity-feed">
+          <h3>Signal du Nexus</h3>
+          <ul id="event-log"></ul>
+        </div>
+      </aside>
+
+      <main class="content-area">
+        <nav class="tabs">
+          <button class="tab-button active" data-tab="forge">Forge</button>
+          <button class="tab-button" data-tab="lab">Laboratoire</button>
+          <button class="tab-button" data-tab="void">Invocation</button>
+          <button class="tab-button" data-tab="chronicles">Chroniques</button>
+          <button class="tab-button" data-tab="ascend">Ascension</button>
+        </nav>
+
+        <section class="panels">
+          <div class="tab-panel active" data-tab="forge">
+            <header class="panel-header">
+              <h2>Fonderies Automatisées</h2>
+              <p>Configurez vos lignes de production. Chaque carte pulse selon son niveau.</p>
+            </header>
+            <div id="automation-grid" class="card-grid"></div>
+          </div>
+
+          <div class="tab-panel" data-tab="lab">
+            <header class="panel-header">
+              <h2>Réacteur de Recherche</h2>
+              <p>Les percées modifient le comportement du Nexus et débloquent de nouvelles couches.</p>
+            </header>
+            <div id="research-grid" class="card-grid research"></div>
+          </div>
+
+          <div class="tab-panel" data-tab="void">
+            <header class="panel-header">
+              <h2>Chambre du Néant</h2>
+              <p>Libérez vos clés pour attirer des artéfacts. Plus vous tirez, plus la chambre s'agite.</p>
+            </header>
+            <div class="void-actions">
+              <button id="pull-once" class="primary">Invocation x1</button>
+              <button id="pull-ten" class="primary">Invocation x10</button>
+              <button id="salvage-duplicates" class="ghost">Transmuter doublons</button>
+            </div>
+            <div class="void-stage">
+              <div class="gacha-cards" id="gacha-results"></div>
+              <aside class="artifact-inventory">
+                <h3>Collection</h3>
+                <div id="artifact-inventory" class="artifact-grid"></div>
+              </aside>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-tab="chronicles">
+            <header class="panel-header">
+              <h2>Chroniques</h2>
+              <p>Le Nexus grave vos exploits en fractales lumineuses.</p>
+            </header>
+            <div id="achievement-list" class="timeline"></div>
+          </div>
+
+          <div class="tab-panel" data-tab="ascend">
+            <header class="panel-header">
+              <h2>Cycle d'Ascension</h2>
+              <p>Recommencez avec davantage d'essence et une forge plus puissante.</p>
+            </header>
+            <div class="ascend-wrapper">
+              <div class="ascend-info">
+                <p>Flux total généré : <strong id="flux-lifetime">0</strong></p>
+                <p>Essence estimée : <strong id="ascend-estimate">0</strong></p>
+              </div>
+              <button id="ascend-button" class="ascend-button" disabled>Déclencher l'ascension</button>
+              <div class="ascend-tip">Seuil requis : 100k flux cumulés et 1k flux disponibles.</div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="bottom-bar">
+      <div class="save-controls">
+        <button id="export-save">Exporter</button>
+        <button id="import-save">Importer</button>
+        <button id="wipe-save" class="danger">Réinitialiser</button>
+      </div>
+      <textarea id="save-data" placeholder="Collez ou récupérez vos données ici"></textarea>
+    </footer>
+  </div>
+
+  <template id="automation-card-template">
+    <article class="card automation">
+      <div class="card-pulse"></div>
+      <header class="card-header">
+        <h3 class="card-title"></h3>
+        <span class="card-level"></span>
+      </header>
+      <p class="card-desc"></p>
+      <p class="card-effect"></p>
+      <div class="card-footer">
+        <span class="card-cost"></span>
+        <button class="card-action">Installer</button>
+      </div>
+    </article>
+  </template>
+
+  <template id="research-card-template">
+    <article class="card research">
+      <div class="card-pulse"></div>
+      <header class="card-header">
+        <h3 class="card-title"></h3>
+        <span class="card-status"></span>
+      </header>
+      <p class="card-desc"></p>
+      <p class="card-effect"></p>
+      <div class="card-footer">
+        <span class="card-cost"></span>
+        <button class="card-action">Lancer</button>
+      </div>
+    </article>
+  </template>
+
+  <template id="achievement-template">
+    <article class="timeline-entry">
+      <div class="timeline-node"></div>
+      <div class="timeline-body">
+        <h4 class="timeline-title"></h4>
+        <p class="timeline-text"></p>
+      </div>
+    </article>
+  </template>
+
+  <script src="game.js" type="module"></script>
+</body>
+</html>
